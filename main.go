@@ -72,14 +72,14 @@ func main() {
 	var wg sync.WaitGroup
 	nodes := []Node{}
 	ch := make(chan int)
-	for i := 0; i < 2; i++ {
+	for i := 0; i < 5; i++ {
 		n := Node{make(chan int), i, "follower"}
 		wg.Add(1)
 		nodes = append(nodes, n)
 		// fmt.Println("xxx", nodes)
 
-		time.Sleep(time.Second)
 		go node(&nodes[i], &nodes, &mu, &wg)
+		wg.Wait()
 	}
 
 	for j := range ch {
